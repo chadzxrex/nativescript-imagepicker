@@ -60,6 +60,10 @@ export class ImagePicker extends data_observable.Observable {
         // Solution: use `fullscreen` style
         // https://developer.apple.com/documentation/uikit/uimodalpresentationstyle
         imagePickerController.modalPresentationStyle = UIModalPresentationStyle.FullScreen;
+        // with iOS 14 dark mode, after making presentation style `fullscreen`, the image picker
+        // will become "dark background + dark text", which make text unreadable
+        // Solution: force image picker to use light mode
+        imagePickerController.overrideUserInterfaceStyle = UIUserInterfaceStyle.Light;
 
         this._imagePickerController = imagePickerController;
     }
