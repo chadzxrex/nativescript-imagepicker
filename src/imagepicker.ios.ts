@@ -55,6 +55,15 @@ export class ImagePicker extends data_observable.Observable {
         imagePickerController.numberOfColumnsInPortrait = options.numberOfColumnsInPortrait || imagePickerController.numberOfColumnsInPortrait;
         imagePickerController.numberOfColumnsInLandscape = options.numberOfColumnsInLandscape || imagePickerController.numberOfColumnsInLandscape;
         imagePickerController.prompt = options.prompt || imagePickerController.prompt;
+        // After iOS 13 the default modal style will be `pageSheet`, which can be dismissed by "swiping down"
+        // which won't trigger any lifecycle hook and thus cause issue MAG-2638.
+        // Solution: use `fullscreen` style
+        // https://developer.apple.com/documentation/uikit/uimodalpresentationstyle
+        imagePickerController.modalPresentationStyle = UIModalPresentationStyle.FullScreen;
+        // with iOS 14 dark mode, after making presentation style `fullscreen`, the image picker
+        // will become "dark background + dark text", which make text unreadable
+        // Solution: force image picker to use light mode
+        imagePickerController.overrideUserInterfaceStyle = UIUserInterfaceStyle.Light;
 
         this._imagePickerController = imagePickerController;
     }
