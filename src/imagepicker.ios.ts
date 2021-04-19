@@ -101,7 +101,7 @@ export class ImagePickerControllerDelegate extends NSObject implements QBImagePi
     _reject: any;
 
     qb_imagePickerControllerDidCancel?(imagePickerController: QBImagePickerController): void {
-        imagePickerController.dismissViewControllerAnimatedCompletion(true, null);
+        imagePickerController.dismissViewControllerAnimatedCompletion(false, null);
         this._reject(new Error("Selection canceled."));
 
         this.deRegisterFromGlobal();
@@ -123,7 +123,7 @@ export class ImagePickerControllerDelegate extends NSObject implements QBImagePi
 
         this._resolve(assets);
 
-        imagePickerController.dismissViewControllerAnimatedCompletion(true, () => {
+        imagePickerController.dismissViewControllerAnimatedCompletion(false, () => {
             this.deRegisterFromGlobal();
             // FIX: possible memory issue when picking images many times.
             // Not the best solution, but the only one working for now
